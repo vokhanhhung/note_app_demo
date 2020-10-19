@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:getx_pattern_project/app/data/repositories/auth_repository.dart';
+import 'package:getx_pattern_project/app/data/repositories/image_repository.dart';
+import 'package:getx_pattern_project/app/data/repositories/note_repository.dart';
 import 'package:getx_pattern_project/app/routes/app_routes.dart';
 
 class LoginController extends GetxController {
@@ -14,7 +16,7 @@ class LoginController extends GetxController {
       await Future.delayed(
         Duration(seconds: 2),
       );
-      Get.offNamed(Routes.HOME);
+      Get.offAllNamed(Routes.HOME);
     } else {
       Get.snackbar(
         'Thất bại',

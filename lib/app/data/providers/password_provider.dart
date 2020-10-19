@@ -11,4 +11,6 @@ class PasswordProvider {
   void setPassword(String password) async {
     return await _storage.write(Keys.PASSWORD, password);
   }
+
+  bool get isLogin => getPassword() != null;
 }

@@ -1,7 +1,7 @@
 class ImageModel {
-  final String path;
-  final String content;
-  final String dateTime;
+  String path;
+  String content;
+  String dateTime;
   ImageModel(this.path, this.content, this.dateTime);
 
   ImageModel.fromJson(dynamic json)

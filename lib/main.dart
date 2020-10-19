@@ -21,9 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: passwordProvider.getPassword() == null
-          ? Routes.REGISTER
-          : Routes.LOGIN,
+      initialRoute: passwordProvider.isLogin ? Routes.LOGIN : Routes.REGISTER,
       initialBinding: RegisterBinding(),
       getPages: AppPages.pages,
     );

@@ -4,6 +4,7 @@ import 'package:getx_pattern_project/app/data/models/image_model.dart';
 import 'package:getx_pattern_project/app/data/models/note_model.dart';
 import 'package:getx_pattern_project/app/data/repositories/image_repository.dart';
 import 'package:getx_pattern_project/app/data/repositories/note_repository.dart';
+import 'package:getx_pattern_project/app/modules/home/local_widets/add_note_dialog.dart';
 import 'package:getx_pattern_project/app/until/function_untils.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,8 +20,7 @@ class HomeController extends GetxController {
   final imageContentController = TextEditingController();
   final noteContentController = TextEditingController();
 
-  bool get isEmptyNotes => notes.isEmpty;
-  bool get isEmptyImages => images.isEmpty;
+  bool get isEmptyList => notes.isEmpty && images.isEmpty;
 
   void updateMixList() {
     mixList = [].obs;
@@ -55,23 +55,16 @@ class HomeController extends GetxController {
       imageQuality: 100,
     );
 
-    await Get.dialog(
-      Dialog(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: TextField(
-            controller: imageContentController,
-            autofocus: true,
-            onSubmitted: (value) => Get.back(),
-            decoration: InputDecoration(labelText: 'Ghi chú: '),
-          ),
-        ),
-      ),
-    );
+    await Get.dialog(AddNoteDialog(
+      controller: imageContentController,
+    ));
 
     if (pickedFile != null) {
       var image = ImageModel(
-          pickedFile.path, imageContentController.text, toDate(DateTime.now()));
+        pickedFile.path,
+        imageContentController.text,
+        toDate(DateTime.now()),
+      );
       images.add(image);
       update();
     } else {
@@ -81,19 +74,9 @@ class HomeController extends GetxController {
 
   Future addNote() async {
     noteContentController.text = '';
-    await Get.dialog(
-      Dialog(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: TextField(
-            controller: noteContentController,
-            autofocus: true,
-            onSubmitted: (value) => Get.back(),
-            decoration: InputDecoration(labelText: 'Nội dung ghi chú: '),
-          ),
-        ),
-      ),
-    );
+    await Get.dialog(AddNoteDialog(
+      controller: noteContentController,
+    ));
     var note =
         NoteModel(noteContentController.text, false, toDate(DateTime.now()));
     notes.add(note);
